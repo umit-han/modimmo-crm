@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { getPurchaseOrders } from "@/actions/purchase-orders";
 import { PurchaseOrderLayout } from "./components/purchase-order-layout";
 import Link from "next/link";

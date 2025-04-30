@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { PurchaseOrderForm } from "../components/purchase-order-form";
 import {
   getItems,

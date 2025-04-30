@@ -6,9 +6,10 @@ import Providers from "@/components/Providers";
 // import FooterBanner from "@/components/Footer";
 const inter = Rethink_Sans({ subsets: ["latin"], display: "swap" });
 
-export const metadata: Metadata = {
-  title: "Inventory Pro",
-  description: "Simplify Your Inventory Management with Inventory Pro",
+export const metadata = {
+  metadataBase: new URL('https://modimmo-crm.vercel.app'),
+  title: 'Modimmo CRM',
+  description: 'CRM paneli',
 };
 export default function RootLayout({
   children,
