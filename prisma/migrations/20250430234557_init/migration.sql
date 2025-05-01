@@ -87,7 +87,7 @@ CREATE TABLE "User" (
     "orgId" TEXT NOT NULL,
     "locationId" TEXT,
     "locationName" TEXT,
-    "isVerfied" BOOLEAN NOT NULL DEFAULT false,
+    "isVerfied" BOOLEAN NOT NULL DEFAULT true,
     "token" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
