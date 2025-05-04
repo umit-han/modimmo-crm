@@ -1,4 +1,4 @@
-// This is your Prisma schema file,
+// This is your Prisma schema file for MongoDB
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
@@ -6,15 +6,15 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 // ===== AUTHENTICATION & USER MODELS =====
 
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
   type              String
   provider          String
   providerAccountId String
@@ -32,30 +32,30 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
-  userId       String
+  userId       String   @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Role {
-  id           String       @id @default(cuid())
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   displayName  String // Human-readable name (e.g., "Store Manager")
   roleName     String       @unique // System name (e.g., "store_manager")
   organisation Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId        String
+  orgId        String       @db.ObjectId
   description  String?
   permissions  String[] // Array of permission strings
-  users        User[]       @relation("UserRoles")
+  users        User[]       @relation("UserRoles", fields: [userIds], references: [id])
+  userIds      String[]     @db.ObjectId
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 
-  @@index([roleName])
 }
 
 model User {
-  id            String       @id @default(cuid())
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
   name          String
   firstName     String
   lastName      String
@@ -64,22 +64,23 @@ model User {
   emailVerified DateTime?
   image         String?
   jobTitle      String?
-  roles         Role[]       @relation("UserRoles")
+  roles         Role[]       @relation("UserRoles", fields: [roleIds], references: [id])
+  roleIds       String[]     @db.ObjectId
   password      String?
   status        Boolean      @default(true)
   accounts      Account[]
   sessions      Session[]
   orgName       String?
   organisation  Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId         String
+  orgId         String       @db.ObjectId
   location      Location?    @relation(fields: [locationId], references: [id])
-  locationId    String?
+  locationId    String?      @db.ObjectId
   locationName  String?
   isVerfied     Boolean      @default(false)
   token         String?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  roleId        String?
+  roleId        String?      @db.ObjectId
 
   // Relationships for transactions
   createdPurchaseOrders  PurchaseOrder[] @relation("PurchaseOrderCreatedBy")
@@ -93,7 +94,7 @@ model User {
 }
 
 model Organisation {
-  id                 String          @id @default(cuid())
+  id                 String          @id @default(auto()) @map("_id") @db.ObjectId
   name               String
   slug               String          @unique
   industry           String?
@@ -130,10 +131,10 @@ model Organisation {
 }
 
 model Invite {
-  id           String       @id @default(cuid())
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   email        String       @unique
   organisation Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId        String
+  orgId        String       @db.ObjectId
   status       Boolean      @default(false)
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
@@ -142,8 +143,8 @@ model Invite {
 }
 
 model ApiKey {
-  id        String       @id @default(cuid())
-  orgId     String
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  orgId     String       @db.ObjectId
   key       String       @unique
   name      String
   createdAt DateTime     @default(now())
@@ -153,7 +154,7 @@ model ApiKey {
 // ===== LOCATION MODEL =====
 
 model Location {
-  id           String       @id @default(cuid())
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   type         LocationType
   address      String?
@@ -161,7 +162,7 @@ model Location {
   email        String?
   isActive     Boolean      @default(true)
   organisation Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId        String
+  orgId        String       @db.ObjectId
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 
@@ -185,56 +186,56 @@ enum LocationType {
 // ===== PRODUCT CATALOG MODELS =====
 
 model Category {
-  id            String       @id @default(cuid())
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   slug          String       @unique
   imageUrl      String?
   description   String?
-  parentId      String?
-  parent        Category?    @relation("SubCategories", fields: [parentId], references: [id])
+  parentId      String?      @db.ObjectId
+  parent        Category?    @relation("SubCategories", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   subCategories Category[]   @relation("SubCategories")
   items         Item[]
   organisation  Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId         String
+  orgId         String       @db.ObjectId
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 }
 
 model Unit {
-  id           String       @id @default(cuid())
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   symbol       String
   items        Item[]
   organisation Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId        String
+  orgId        String       @db.ObjectId
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 }
 
 model Brand {
-  id           String       @id @default(cuid())
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   slug         String       @unique
   items        Item[]
   organisation Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId        String
+  orgId        String       @db.ObjectId
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 }
 
 model TaxRate {
-  id           String       @id @default(cuid())
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   rate         Float
   items        Item[]
   organisation Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId        String
+  orgId        String       @db.ObjectId
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 }
 
 model Item {
-  id              String       @id @default(cuid())
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
   name            String
   slug            String       @unique
   sku             String       @unique
@@ -248,16 +249,16 @@ model Item {
   ean             String? //Thirteen digit unique number (International Article Number)
   mpn             String? //Manufacturing Part Number unambiguously identifies a part design
   isbn            String? //Thirteen digit unique commercial book identifier (International Standard Book Number)
-  categoryId      String?
+  categoryId      String?      @db.ObjectId
   thumbnail       String?      @default("https://14j7oh8kso.ufs.sh/f/HLxTbDBCDLwfAXaapcezIN7vwylkF1PXSCqAuseUG0gx8mhd")
   imageUrls       String[]
-  category        Category?    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  taxRateId       String?
+  category        Category?    @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction )
+  taxRateId       String?      @db.ObjectId
   tax             Float? //tax rate
   taxRate         TaxRate?     @relation(fields: [taxRateId], references: [id])
-  brandId         String?
+  brandId         String?      @db.ObjectId
   brand           Brand?       @relation(fields: [brandId], references: [id])
-  unitId          String?
+  unitId          String?      @db.ObjectId
   unit            Unit?        @relation(fields: [unitId], references: [id], onDelete: Cascade)
   unitOfMeasure   String? //unit name
   costPrice       Float        @default(0)
@@ -267,14 +268,15 @@ model Item {
   isActive        Boolean      @default(true)
   isSerialTracked Boolean      @default(false)
   organisation    Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId           String
+  orgId           String       @db.ObjectId
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
 
   // Relationships
   inventories        Inventory[]
   serialNumbers      SerialNumber[]
-  suppliers          Supplier[]          @relation("SupplierItems")
+  supplierIds        String[]         @db.ObjectId
+  suppliers          Supplier[]       @relation("SupplierItems", fields: [supplierIds], references: [id])
   supplierRelations  ItemSupplier[]
   purchaseOrderLines PurchaseOrderLine[]
   salesOrderLines    SalesOrderLine[]
@@ -286,7 +288,7 @@ model Item {
 // ===== SUPPLIER MODELS =====
 
 model Supplier {
-  id            String       @id @default(cuid())
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
   name          String
   contactPerson String?
   email         String?
@@ -297,21 +299,22 @@ model Supplier {
   notes         String?
   isActive      Boolean      @default(true)
   organisation  Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId         String
+  orgId         String       @db.ObjectId
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 
   // Relationships
-  items             Item[]          @relation("SupplierItems")
+  itemIds           String[]      @db.ObjectId
+  items             Item[]        @relation("SupplierItems", fields: [itemIds], references: [id])
   supplierRelations ItemSupplier[]
   purchaseOrders    PurchaseOrder[]
 }
 
 model ItemSupplier {
-  id               String    @id @default(cuid())
-  itemId           String
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  itemId           String    @db.ObjectId
   item             Item      @relation(fields: [itemId], references: [id])
-  supplierId       String
+  supplierId       String    @db.ObjectId
   supplier         Supplier  @relation(fields: [supplierId], references: [id])
   isPreferred      Boolean   @default(false)
   supplierSku      String? // Supplier's own SKU for this item
@@ -327,32 +330,30 @@ model ItemSupplier {
 // ===== INVENTORY MODELS =====
 
 model Inventory {
-  id               String       @id @default(cuid())
-  itemId           String
+  id               String       @id @default(auto()) @map("_id") @db.ObjectId
+  itemId           String       @db.ObjectId
   item             Item         @relation(fields: [itemId], references: [id])
-  locationId       String
+  locationId       String       @db.ObjectId
   location         Location     @relation(fields: [locationId], references: [id])
   quantity         Int          @default(0)
   reservedQuantity Int          @default(0)
   organisation     Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId            String
+  orgId            String       @db.ObjectId
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 
   @@unique([itemId, locationId])
-  @@index([itemId])
-  @@index([locationId])
 }
 
 model SerialNumber {
-  id              String       @id @default(cuid())
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
   serialNumber    String       @unique
-  itemId          String
+  itemId          String       @db.ObjectId
   item            Item         @relation(fields: [itemId], references: [id])
   status          SerialStatus @default(IN_STOCK)
-  locationId      String?
-  purchaseOrderId String?
-  salesOrderId    String?
+  locationId      String?      @db.ObjectId
+  purchaseOrderId String?      @db.ObjectId
+  salesOrderId    String?      @db.ObjectId
   notes           String?
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
@@ -369,13 +370,13 @@ enum SerialStatus {
 // ===== PURCHASE MODELS =====
 
 model PurchaseOrder {
-  id                   String              @id @default(cuid())
+  id                   String              @id @default(auto()) @map("_id") @db.ObjectId
   poNumber             String              @unique
   date                 DateTime
-  supplierId           String
+  supplierId           String              @db.ObjectId
   supplierName         String?
   supplier             Supplier            @relation(fields: [supplierId], references: [id])
-  deliveryLocationId   String
+  deliveryLocationId   String              @db.ObjectId
   deliveryLocation     Location            @relation("DeliveryLocation", fields: [deliveryLocationId], references: [id])
   status               PurchaseOrderStatus @default(DRAFT)
   subtotal             Float               @default(0)
@@ -387,19 +388,16 @@ model PurchaseOrder {
   paymentTerms         String?
   expectedDeliveryDate DateTime?
   organisation         Organisation        @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId                String
-  createdById          String
+  orgId                String              @db.ObjectId
+  createdById          String              @db.ObjectId
   createdBy            User                @relation("PurchaseOrderCreatedBy", fields: [createdById], references: [id])
-  approvedById         String?
+  approvedById         String?             @db.ObjectId
   approvedBy           User?               @relation("PurchaseOrderApprovedBy", fields: [approvedById], references: [id])
   lines                PurchaseOrderLine[]
   goodsReceipts        GoodsReceipt[]
   createdAt            DateTime            @default(now())
   updatedAt            DateTime            @updatedAt
 
-  @@index([poNumber])
-  @@index([supplierId])
-  @@index([status])
 }
 
 enum PurchaseOrderStatus {
@@ -413,10 +411,10 @@ enum PurchaseOrderStatus {
 }
 
 model PurchaseOrderLine {
-  id                String             @id @default(cuid())
-  purchaseOrderId   String
+  id                String             @id @default(auto()) @map("_id") @db.ObjectId
+  purchaseOrderId   String             @db.ObjectId
   purchaseOrder     PurchaseOrder      @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
-  itemId            String
+  itemId            String             @db.ObjectId
   item              Item               @relation(fields: [itemId], references: [id])
   quantity          Int
   unitPrice         Float
@@ -430,31 +428,26 @@ model PurchaseOrderLine {
   updatedAt         DateTime           @updatedAt
   goodsReceiptLines GoodsReceiptLine[]
 
-  @@index([purchaseOrderId])
-  @@index([itemId])
 }
 
 model GoodsReceipt {
-  id              String             @id @default(cuid())
+  id              String             @id @default(auto()) @map("_id") @db.ObjectId
   receiptNumber   String             @unique
   date            DateTime
-  purchaseOrderId String
+  purchaseOrderId String             @db.ObjectId
   purchaseOrder   PurchaseOrder      @relation(fields: [purchaseOrderId], references: [id])
-  locationId      String
+  locationId      String             @db.ObjectId
   location        Location           @relation(fields: [locationId], references: [id])
   status          GoodsReceiptStatus @default(PENDING)
   notes           String?
   organisation    Organisation       @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId           String
-  receivedById    String
+  orgId           String             @db.ObjectId
+  receivedById    String             @db.ObjectId
   receivedBy      User               @relation("GoodsReceiptReceivedBy", fields: [receivedById], references: [id])
   lines           GoodsReceiptLine[]
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
 
-  @@index([receiptNumber])
-  @@index([purchaseOrderId])
-  @@index([status])
 }
 
 enum GoodsReceiptStatus {
@@ -464,12 +457,12 @@ enum GoodsReceiptStatus {
 }
 
 model GoodsReceiptLine {
-  id                  String            @id @default(cuid())
-  goodsReceiptId      String
+  id                  String            @id @default(auto()) @map("_id") @db.ObjectId
+  goodsReceiptId      String            @db.ObjectId
   goodsReceipt        GoodsReceipt      @relation(fields: [goodsReceiptId], references: [id], onDelete: Cascade)
-  purchaseOrderLineId String
+  purchaseOrderLineId String            @db.ObjectId
   purchaseOrderLine   PurchaseOrderLine @relation(fields: [purchaseOrderLineId], references: [id])
-  itemId              String
+  itemId              String            @db.ObjectId
   item                Item              @relation(fields: [itemId], references: [id])
   receivedQuantity    Int
   notes               String?
@@ -477,15 +470,12 @@ model GoodsReceiptLine {
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @updatedAt
 
-  @@index([goodsReceiptId])
-  @@index([purchaseOrderLineId])
-  @@index([itemId])
 }
 
 // ===== SALES MODELS =====
 
 model Customer {
-  id           String       @id @default(cuid())
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   email        String?
   phone        String?
@@ -494,23 +484,21 @@ model Customer {
   notes        String?
   isActive     Boolean      @default(true)
   organisation Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId        String
+  orgId        String       @db.ObjectId
   salesOrders  SalesOrder[]
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 
-  @@index([email])
-  @@index([phone])
 }
 
 model SalesOrder {
-  id            String           @id @default(cuid())
+  id            String           @id @default(auto()) @map("_id") @db.ObjectId
   orderNumber   String           @unique
   date          DateTime
-  customerId    String?
+  customerId    String?          @db.ObjectId
   source        Source           @default(SALES_ORDER)
   customer      Customer?        @relation(fields: [customerId], references: [id])
-  locationId    String
+  locationId    String           @db.ObjectId
   location      Location         @relation("SalesLocation", fields: [locationId], references: [id])
   status        SalesOrderStatus @default(DRAFT)
   subtotal      Float            @default(0)
@@ -522,17 +510,13 @@ model SalesOrder {
   paymentMethod String?
   notes         String?
   organisation  Organisation     @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId         String
-  createdById   String
+  orgId         String           @db.ObjectId
+  createdById   String           @db.ObjectId
   createdBy     User             @relation("SalesOrderCreatedBy", fields: [createdById], references: [id])
   lines         SalesOrderLine[]
   createdAt     DateTime         @default(now())
   updatedAt     DateTime         @updatedAt
 
-  @@index([orderNumber])
-  @@index([customerId])
-  @@index([status])
-  @@index([paymentStatus])
 }
 
 enum SalesOrderStatus {
@@ -559,10 +543,10 @@ enum PaymentStatus {
 }
 
 model SalesOrderLine {
-  id            String     @id @default(cuid())
-  salesOrderId  String
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  salesOrderId  String     @db.ObjectId
   salesOrder    SalesOrder @relation(fields: [salesOrderId], references: [id], onDelete: Cascade)
-  itemId        String
+  itemId        String     @db.ObjectId
   item          Item       @relation(fields: [itemId], references: [id])
   quantity      Int
   unitPrice     Float
@@ -574,36 +558,30 @@ model SalesOrderLine {
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
-  @@index([salesOrderId])
-  @@index([itemId])
 }
 
 // ===== STOCK MOVEMENT MODELS =====
 
 model Transfer {
-  id             String         @id @default(cuid())
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
   transferNumber String         @unique
   date           DateTime
-  fromLocationId String
+  fromLocationId String         @db.ObjectId
   fromLocation   Location       @relation("FromLocation", fields: [fromLocationId], references: [id])
-  toLocationId   String
+  toLocationId   String         @db.ObjectId
   toLocation     Location       @relation("ToLocation", fields: [toLocationId], references: [id])
   status         TransferStatus @default(DRAFT)
   notes          String?
   organisation   Organisation   @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId          String
-  createdById    String
+  orgId          String         @db.ObjectId
+  createdById    String         @db.ObjectId
   createdBy      User           @relation("TransferCreatedBy", fields: [createdById], references: [id])
-  approvedById   String?
+  approvedById   String?        @db.ObjectId
   approvedBy     User?          @relation("TransferApprovedBy", fields: [approvedById], references: [id])
   lines          TransferLine[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
-  @@index([transferNumber])
-  @@index([fromLocationId])
-  @@index([toLocationId])
-  @@index([status])
 }
 
 enum TransferStatus {
@@ -615,10 +593,10 @@ enum TransferStatus {
 }
 
 model TransferLine {
-  id            String   @id @default(cuid())
-  transferId    String
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  transferId    String   @db.ObjectId
   transfer      Transfer @relation(fields: [transferId], references: [id], onDelete: Cascade)
-  itemId        String
+  itemId        String   @db.ObjectId
   item          Item     @relation(fields: [itemId], references: [id])
   quantity      Int
   notes         String?
@@ -626,34 +604,28 @@ model TransferLine {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  @@index([transferId])
-  @@index([itemId])
 }
 
 model Adjustment {
-  id               String           @id @default(cuid())
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
   adjustmentNumber String           @unique
   date             DateTime
-  locationId       String
+  locationId       String           @db.ObjectId
   location         Location         @relation(fields: [locationId], references: [id])
   adjustmentType   AdjustmentType
   reason           String
   notes            String?
   status           AdjustmentStatus @default(DRAFT)
   organisation     Organisation     @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  orgId            String
-  createdById      String
+  orgId            String           @db.ObjectId
+  createdById      String           @db.ObjectId
   createdBy        User             @relation("AdjustmentCreatedBy", fields: [createdById], references: [id])
-  approvedById     String?
+  approvedById     String?          @db.ObjectId
   approvedBy       User?            @relation("AdjustmentApprovedBy", fields: [approvedById], references: [id])
   lines            AdjustmentLine[]
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
 
-  @@index([adjustmentNumber])
-  @@index([locationId])
-  @@index([adjustmentType])
-  @@index([status])
 }
 
 enum AdjustmentType {
@@ -674,10 +646,10 @@ enum AdjustmentStatus {
 }
 
 model AdjustmentLine {
-  id               String     @id @default(cuid())
-  adjustmentId     String
+  id               String     @id @default(auto()) @map("_id") @db.ObjectId
+  adjustmentId     String     @db.ObjectId
   adjustment       Adjustment @relation(fields: [adjustmentId], references: [id], onDelete: Cascade)
-  itemId           String
+  itemId           String     @db.ObjectId
   item             Item       @relation(fields: [itemId], references: [id])
   beforeQuantity   Int
   afterQuantity    Int
@@ -687,6 +659,4 @@ model AdjustmentLine {
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
 
-  @@index([adjustmentId])
-  @@index([itemId])
 }
