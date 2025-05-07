@@ -12,7 +12,7 @@ import { TransferStatusChart } from "./TransferStatusChart";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { TransferStatus, AdjustmentType } from "@prisma/client";
+import { TransferStatus, AdjustmentType } from "@/lib/constants/enums";
 import { useState } from "react";
 import { Grid } from "@/components/ui/grid";
 import { RecentTransfersTable } from "./RecentTransfersTable";

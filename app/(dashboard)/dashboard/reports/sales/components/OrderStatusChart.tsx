@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { SalesOrderStatus } from "@prisma/client";
+import { SalesOrderStatus } from "@/lib/constants/enums";
 
 interface OrderStatusChartProps {
   data: Array<{

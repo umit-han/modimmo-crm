@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Grid } from "@/components/ui/grid";
-import { SalesOrderStatus, PaymentStatus } from "@prisma/client";
+import { SalesOrderStatus, PaymentStatus } from "@/lib/constants/enums";
 import { CustomerSalesChart } from "./CustomerSalesChart";
 import { TopCustomersTable } from "./TopCustomersTable";
 import { RecentOrdersTable } from "./RecentOrdersTable";
@@ -13,6 +13,7 @@ import { SalesSummaryCards } from "./SummaryCards";
 import { SalesTrendChart } from "./SalesTrendChart";
 import { OrderStatusChart } from "./OrderStatusChart";
 import { PaymentStatusChart } from "./PaymentStatusChart";
+
 
 interface SalesReportProps {
   data: {
