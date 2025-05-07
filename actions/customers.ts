@@ -19,7 +19,8 @@ import {
   SupplierCreateDTO,
   SupplierDTO,
 } from "@/types/types";
-import { LocationType } from "@prisma/client";
+import { LocationType } from "@/lib/constants/enums";
+import {SalesOrder, StatusCount, PaymentStatusCount } from "@/types/actions/customers"
 import axios from "axios";
 import { error } from "console";
 import { revalidatePath } from "next/cache";
@@ -219,23 +220,24 @@ export async function getCustomerWithOrderHistory(customerId: string) {
     const stats = {
       totalOrders: customer.salesOrders.length,
       totalSpent: customer.salesOrders.reduce(
-        (sum, order) =>
+        (sum: number, order: SalesOrder) =>
           order.status !== "CANCELLED" ? sum + order.total : sum,
         0
       ),
-      completedOrders: customer.salesOrders.filter((order) =>
-        ["COMPLETED", "DELIVERED"].includes(order.status)
+      completedOrders: customer.salesOrders.filter(
+        (order: SalesOrder) => ["COMPLETED", "DELIVERED"].includes(order.status)
       ).length,
       cancelledOrders: customer.salesOrders.filter(
-        (order) => order.status === "CANCELLED"
+        (order: SalesOrder) => order.status === "CANCELLED"
       ).length,
       pendingPayment: customer.salesOrders
         .filter(
-          (order) =>
+          (order: SalesOrder) =>
             order.paymentStatus !== "PAID" && order.status !== "CANCELLED"
         )
-        .reduce((sum, order) => sum + order.total, 0),
+        .reduce((sum: number, order: SalesOrder) => sum + order.total, 0),
     };
+    
 
     return {
       success: true,
@@ -278,16 +280,16 @@ export async function getOrderStatusCounts(customerId: string) {
 
     return {
       success: true,
-      data: {
+      data : {
         statusCounts: statusCounts.reduce(
-          (acc, curr) => {
+          (acc: Record<string, number>, curr: StatusCount) => {
             acc[curr.status] = curr._count.status;
             return acc;
           },
           {} as Record<string, number>
         ),
         paymentStatusCounts: paymentStatusCounts.reduce(
-          (acc, curr) => {
+          (acc: Record<string, number>, curr: PaymentStatusCount) => {
             acc[curr.paymentStatus] = curr._count.paymentStatus;
             return acc;
           },

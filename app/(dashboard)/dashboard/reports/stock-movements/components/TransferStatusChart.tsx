@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { TransferStatus } from "@prisma/client";
+import { TransferStatus } from "@/lib/constants/enums";
 
 interface TransferStatusChartProps {
   data: Array<{
