@@ -2,6 +2,7 @@
 
 import { getAuthenticatedUser } from "@/config/useAuth";
 import { db } from "@/prisma/db";
+import {Inventory} from "@/types/models"
 
 // Server-side data fetching
 export async function getDashboardData() {
@@ -17,7 +18,7 @@ export async function getDashboardData() {
     },
   });
 
-  const totalValue = inventoryItems.reduce((sum, inv) => {
+  const totalValue = inventoryItems.reduce((sum: number, inv) => {
     return sum + inv.quantity * (inv.item.costPrice || 0);
   }, 0);
 

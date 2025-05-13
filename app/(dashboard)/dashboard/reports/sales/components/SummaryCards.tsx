@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Grid } from "@/components/ui/grid";
 import { DollarSign, ShoppingBag, Package, CreditCard } from "lucide-react";
-import { SalesOrderStatus, PaymentStatus } from "@/lib/constants/enums";
+import { SalesOrderStatus, PaymentStatus } from "@/types/enums";
 
 interface SalesSummaryCardsProps {
   stats: {

@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { PaymentStatus } from "@/lib/constants/enums";
+import { PaymentStatus } from "@/types/enums";
 
 interface PaymentStatusChartProps {
   data: Array<{

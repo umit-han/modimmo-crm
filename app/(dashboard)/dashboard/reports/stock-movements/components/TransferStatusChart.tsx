@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { TransferStatus } from "@/lib/constants/enums";
+import { TransferStatus } from "@/types/enums";
 
 interface TransferStatusChartProps {
   data: Array<{

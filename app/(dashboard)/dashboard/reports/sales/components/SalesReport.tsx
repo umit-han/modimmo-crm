@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Grid } from "@/components/ui/grid";
-import { SalesOrderStatus, PaymentStatus } from "@/lib/constants/enums";
+import { SalesOrderStatus, PaymentStatus } from "@/types/enums";
 import { CustomerSalesChart } from "./CustomerSalesChart";
 import { TopCustomersTable } from "./TopCustomersTable";
 import { RecentOrdersTable } from "./RecentOrdersTable";
