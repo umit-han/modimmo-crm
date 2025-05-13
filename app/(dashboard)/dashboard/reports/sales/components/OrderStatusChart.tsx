@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { SalesOrderStatus } from "@/lib/constants/enums";
+import { SalesOrderStatus } from "@/types/enums";
 
 interface OrderStatusChartProps {
   data: Array<{

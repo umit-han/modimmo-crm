@@ -19,8 +19,8 @@ import {
   SupplierCreateDTO,
   SupplierDTO,
 } from "@/types/types";
-import { LocationType } from "@/lib/constants/enums";
-import {SalesOrder, StatusCount, PaymentStatusCount } from "@/types/actions/customers"
+import { LocationType,SalesOrderStatus } from "@/types/enums";
+import { SalesOrder } from "@/types/models"
 import axios from "axios";
 import { error } from "console";
 import { revalidatePath } from "next/cache";
@@ -219,23 +219,24 @@ export async function getCustomerWithOrderHistory(customerId: string) {
     // Calculate some statistics
     const stats = {
       totalOrders: customer.salesOrders.length,
+      
       totalSpent: customer.salesOrders.reduce(
-        (sum: number, order: SalesOrder) =>
+        (sum: number, order) =>
           order.status !== "CANCELLED" ? sum + order.total : sum,
         0
       ),
       completedOrders: customer.salesOrders.filter(
-        (order: SalesOrder) => ["COMPLETED", "DELIVERED"].includes(order.status)
+        (order) => ["COMPLETED", "DELIVERED"].includes(order.status)
       ).length,
       cancelledOrders: customer.salesOrders.filter(
-        (order: SalesOrder) => order.status === "CANCELLED"
+        (order) => order.status === "CANCELLED"
       ).length,
       pendingPayment: customer.salesOrders
         .filter(
-          (order: SalesOrder) =>
+          (order) =>
             order.paymentStatus !== "PAID" && order.status !== "CANCELLED"
         )
-        .reduce((sum: number, order: SalesOrder) => sum + order.total, 0),
+        .reduce((sum: number, order) => sum + order.total, 0),
     };
     
 
@@ -277,19 +278,20 @@ export async function getOrderStatusCounts(customerId: string) {
         paymentStatus: true,
       },
     });
+console.log('statusCounts',statusCounts);
 
     return {
       success: true,
       data : {
         statusCounts: statusCounts.reduce(
-          (acc: Record<string, number>, curr: StatusCount) => {
+          (acc: Record<string, number>, curr) => {
             acc[curr.status] = curr._count.status;
             return acc;
           },
           {} as Record<string, number>
         ),
         paymentStatusCounts: paymentStatusCounts.reduce(
-          (acc: Record<string, number>, curr: PaymentStatusCount) => {
+          (acc: Record<string, number>, curr) => {
             acc[curr.paymentStatus] = curr._count.paymentStatus;
             return acc;
           },

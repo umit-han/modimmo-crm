@@ -4,21 +4,26 @@ import { db } from "@/prisma/db";
 import { revalidatePath } from "next/cache";
 
 /**
- * Server action to add multiple suppliers to an item
+ * Server action to add multiple suppliers to an item using upsert
  */
 export async function addItemSuppliers(itemId: string, supplierIds: string[]) {
   try {
-    // Create an array of ItemSupplier objects to create
-    const itemSuppliers = supplierIds.map((supplierId) => ({
-      itemId,
-      supplierId,
-    }));
-
-    // Use createMany to insert multiple records at once
-    await db.itemSupplier.createMany({
-      data: itemSuppliers,
-      skipDuplicates: true,
-    });
+    // Tek tek upsert işlemi (varsa güncelleme yok, yoksa ekleme)
+    for (const supplierId of supplierIds) {
+      await db.itemSupplier.upsert({
+        where: {
+          itemId_supplierId: {
+            itemId,
+            supplierId,
+          },
+        },
+        update: {}, // Varsa geç
+        create: {
+          itemId,
+          supplierId,
+        },
+      });
+    }
 
     // Revalidate the item detail page to show the updated suppliers
     revalidatePath(`/dashboard/inventory/items/${itemId}`);
@@ -52,7 +57,8 @@ export async function updateItemSupplier(
       console.log("No item Found");
       return { success: false };
     }
-    // If this is marked as preferred, unmark any other preferred suppliers for this item
+
+    // Eğer bu tercihli olarak işaretlendiyse, önce diğerlerini kaldır
     if (data.isPreferred) {
       await db.itemSupplier.updateMany({
         where: {
@@ -64,12 +70,13 @@ export async function updateItemSupplier(
         },
       });
     }
+
     // Update the item supplier
-    const updated = await db.itemSupplier.update({
+    await db.itemSupplier.update({
       where: { id: itemSupplierId },
       data,
     });
-    // console.log(updated);
+
     // Revalidate the paths
     revalidatePath(`/dashboard/inventory/items/${itemSupplier.itemId}`);
     revalidatePath(
