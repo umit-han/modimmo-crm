@@ -26,7 +26,7 @@ export default async function CreateBatchTransferPage() {
   const items = await getItemsWithInventories(user.orgId);
 
   return (
-    <div className="container mx-auto py-6 space-y-6">
+    <div className="sm:container mx-auto py-6 space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/transfers">
@@ -34,11 +34,11 @@ export default async function CreateBatchTransferPage() {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold">Create Batch Transfer</h1>
+          <h1 className="text-lg md:text-2xl font-bold">Create Batch Transfer</h1>
         </div>
       </div>
 
-      <div className="border rounded-lg p-6 bg-card">
+      <div className="border rounded-lg p-4 sm:p-6 bg-card">
         <Suspense fallback={<Skeleton className="h-96 w-full" />}>
           <BatchTransferForm
             items={items}
