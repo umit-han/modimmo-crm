@@ -39,15 +39,15 @@ export default async function InvoicePage({ params }: InvoicePageProps) {
   };
 
   return (
-    <div className="py-6 p-8">
-      <div className="flex items-center justify-between mb-6">
+    <div className="py-6 p-0 sm:p-8">
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <Link href={`/dashboard/sales/orders/${id}`}>
             <Button variant="ghost" size="icon" className="rounded-full">
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-lg md:text-2xl font-bold">
             Invoice #{salesOrder.orderNumber}
           </h1>
         </div>

@@ -350,7 +350,7 @@ export default function InvoiceView({
   return (
     <div className="space-y-4">
       {/* Action Buttons */}
-      <div className="flex flex-wrap justify-end gap-2">
+      <div className="flex flex-wrap justify-center sm:justify-end gap-2">
         <Button
           variant="outline"
           onClick={handleGeneratePDF}
@@ -390,7 +390,7 @@ export default function InvoiceView({
       <Card className="p-8 bg-white shadow-sm">
         <div ref={componentRef} className="p-2">
           {/* Invoice Header */}
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center sm:items-start gap-3 sm:gap-0">
             <div className="flex items-center gap-3">
               {companyInfo.logo && (
                 <img
@@ -407,7 +407,7 @@ export default function InvoiceView({
               </div>
             </div>
 
-            <div className="text-right">
+            <div className="text-center sm:text-right">
               <h1 className="text-2xl font-bold text-gray-900 uppercase">
                 INVOICE
               </h1>
@@ -420,7 +420,7 @@ export default function InvoiceView({
           <div className="h-0.5 bg-gray-200 my-6"></div>
 
           {/* Bill To / Ship To */}
-          <div className="grid grid-cols-2 gap-10 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-8">
             <div>
               <p className="text-gray-500 uppercase text-sm font-medium mb-2">
                 Bill To
@@ -453,7 +453,7 @@ export default function InvoiceView({
           </div>
 
           {/* Invoice Details */}
-          <div className="grid grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="border border-gray-200 p-3 rounded-md">
               <p className="text-sm text-gray-500 uppercase font-medium">
                 Invoice Date
