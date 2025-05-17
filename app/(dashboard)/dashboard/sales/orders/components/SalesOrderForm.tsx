@@ -775,17 +775,17 @@ export function SalesOrderForm({
               </div>
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => router.push("/dashboard/sales/orders")}
-                disabled={isSubmitting}
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Cancel
-              </Button>
+              <div className="flex flex-wrap justify-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => router.push("/dashboard/sales/orders")}
+                  disabled={isSubmitting}
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Cancel
+                </Button>
 
-              <div className="flex gap-2">
                 <Button
                   type="button"
                   variant="outline"
