@@ -193,10 +193,10 @@ export default function DataTable<T>({
 
   return (
     <Card className="w-full">
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-col sm:flex-row items-center justify-between">
         <div>
-          <CardTitle className="text-2xl">{title}</CardTitle>
-          {subtitle && <p className="text-muted-foreground mt-1">{subtitle}</p>}
+          <CardTitle className="text-lg md:text-2xl text-center sm:text-left">{title}</CardTitle>
+          {subtitle && <p className="text-muted-foreground text-sm mt-1">{subtitle}</p>}
           {/* {filters && (
             <p className="text-muted-foreground mt-1">
               {filteredData.length}{" "}
