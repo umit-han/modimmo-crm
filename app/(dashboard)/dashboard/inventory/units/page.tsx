@@ -12,7 +12,7 @@ export default async function page() {
   const units = (await getOrgUnits(orgId)) || [];
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <ModalTableHeader
         title="Units"
         linkTitle="Add Unit"

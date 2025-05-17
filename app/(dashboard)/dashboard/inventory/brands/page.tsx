@@ -17,7 +17,7 @@ export default async function page() {
   const brands = (await getOrgBrands(orgId)) || [];
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <Suspense fallback={<TableLoading title="Vehicle Inventory" />}>
         <ModalTableHeader
           title="Brands"
