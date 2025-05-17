@@ -214,7 +214,7 @@ export function PurchaseOrderDetail({
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-3">
-              <h2 className="text-2xl font-bold">{purchaseOrder.poNumber}</h2>
+              <h2 className="text-lg md:text-2xl font-bold">{purchaseOrder.poNumber}</h2>
               {getStatusBadge(purchaseOrder.status)}
             </div>
             <p className="text-muted-foreground mt-1">
