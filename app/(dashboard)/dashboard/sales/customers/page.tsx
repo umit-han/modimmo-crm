@@ -6,7 +6,7 @@ import CustomerListing from "./components/CustomerListing";
 
 export default async function ProductsPage() {
   return (
-    <div className="container py-8">
+    <div className="sm:container py-8">
       <Suspense fallback={<TableLoading title="Customers" />}>
         <CustomerListing title="Customers " />
       </Suspense>

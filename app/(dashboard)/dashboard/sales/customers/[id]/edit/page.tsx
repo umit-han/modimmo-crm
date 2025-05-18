@@ -21,7 +21,7 @@ export default async function EditCustomerPage({
 
   return (
     <Suspense fallback={<EditItemLoading />}>
-      <div className="container ">
+      <div className="sm:container ">
         <div className="mb-8 space-y-4">
           <div className="flex items-center gap-2">
             <Link href="/dashboard/sales/customers">
@@ -43,7 +43,7 @@ export default async function EditCustomerPage({
 
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">
+              <h1 className="text-lg sm:text-3xl font-bold tracking-tight">
                 {customer.name}
               </h1>
               <p className="text-muted-foreground mt-1">
