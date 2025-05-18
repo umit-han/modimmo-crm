@@ -87,13 +87,13 @@ export function DateRangePickerForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex space-x-4 items-end"
+        className="w-full lg:w-auto flex flex-col lg:flex-row lg:space-x-4 justify-center lg:justify-between md:justify-start items-end"
       >
         <FormField
           control={form.control}
           name="period"
           render={({ field }) => (
-            <FormItem className="w-32">
+            <FormItem className="w-full lg:w-32 flex flex-row lg:flex-col items-center lg:items-start gap-2">
               <FormLabel>Period</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -115,7 +115,7 @@ export function DateRangePickerForm({
           control={form.control}
           name="fromDate"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
+            <FormItem className="w-full flex flex-row lg:flex-col items-center lg:items-start gap-2">
               <FormLabel>From</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
@@ -123,7 +123,7 @@ export function DateRangePickerForm({
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-[180px] pl-3 text-left font-normal",
+                        "w-full lg:w-[180px] pl-3 text-left font-normal",
                         !field.value && "text-muted-foreground"
                       )}
                     >
@@ -159,7 +159,7 @@ export function DateRangePickerForm({
           control={form.control}
           name="toDate"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
+            <FormItem className="w-full flex flex-row lg:flex-col items-center lg:items-start gap-2">
               <FormLabel>To</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
@@ -167,7 +167,7 @@ export function DateRangePickerForm({
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-[180px] pl-3 text-left font-normal",
+                        "w-full lg:w-[180px] pl-3 text-left font-normal",
                         !field.value && "text-muted-foreground"
                       )}
                     >
@@ -200,7 +200,7 @@ export function DateRangePickerForm({
           )}
         />
 
-        <Button type="submit">Apply</Button>
+        <Button type="submit" className="mt-3 lg:mt-0 w-full">Apply</Button>
       </form>
     </Form>
   );

@@ -43,7 +43,7 @@ export default async function SalesReportPage({
   )) as any;
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-2 md:p-6">
       <PageHeader
         heading="Sales Report"
         description="Analyze sales performance by summary, customers, and products"
@@ -58,7 +58,7 @@ export default async function SalesReportPage({
       </div>
 
       <Tabs defaultValue={view} className="w-full">
-        <TabsList className="mb-4">
+        <TabsList className="mb-4 flex-wrap h-full sm:h-auto">
           <TabsTrigger value="summary">Summary</TabsTrigger>
           <TabsTrigger value="customers">Sales by Customer</TabsTrigger>
           <TabsTrigger value="items">Sales by Item</TabsTrigger>

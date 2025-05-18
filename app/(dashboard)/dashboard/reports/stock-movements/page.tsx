@@ -45,13 +45,13 @@ export default async function StockMovementPage({
   )) as any;
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-2 sm:p-6">
       <PageHeader
         heading="Stock Movement Report"
         description="Track transfers and adjustments to monitor inventory flow across locations"
       />
 
-      <div className="flex justify-end">
+      <div className="flex justify-center md:justify-end">
         <DateRangePickerForm
           initialFromDate={fromDate}
           initialToDate={toDate}
