@@ -124,10 +124,10 @@ export default function DateFilter({ onFilterChange }: DateFilterProps) {
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2 w-full">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="min-w-[180px] justify-between">
+          <Button variant="outline" className="min-w-[180px] w-full justify-between">
             <span>{getFilterLabel()}</span>
             <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
           </Button>

@@ -72,8 +72,8 @@ export default function FilterBar({
 
       {/* Export Button */}
       {onExport && (
-        <div className="w-full sm:w-auto">
-          <TableActions.ExportButton onClick={onExport} />
+        <div className="w-full sm:w-auto flex justify-center">
+          <TableActions.ExportButton className="w-full" onClick={onExport} />
         </div>
       )}
     </div>

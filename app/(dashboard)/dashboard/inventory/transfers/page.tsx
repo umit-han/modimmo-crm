@@ -13,9 +13,9 @@ export default async function TransfersPage() {
   }
 
   return (
-    <div className="container mx-auto py-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Stock Transfers</h1>
+    <div className="sm:container mx-auto py-6 space-y-6">
+      <div className="flex flex-col md:flex-row justify-between items-center">
+        <h1 className="text-lg md:text-3xl font-bold mb-2 md:mb-0">Stock Transfers</h1>
         <div className="flex gap-2">
           <Link href="/dashboard/inventory/stock">
             <Button variant="outline">View Inventory</Button>

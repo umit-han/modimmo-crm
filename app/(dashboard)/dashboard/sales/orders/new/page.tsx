@@ -36,7 +36,7 @@ export default async function CreateSalesOrderPage({
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold">Create Sales Order</h1>
+          <h1 className="text-lg sm:text-2xl font-bold">Create Sales Order</h1>
         </div>
       </div>
 

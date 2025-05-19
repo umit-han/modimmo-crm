@@ -14,7 +14,7 @@ export default async function StockAdjustmentsPage() {
   }
 
   return (
-    <div className="container py-8">
+    <div className="sm:container py-8">
       <Suspense fallback={<TableLoading title="Stock Adjustments" />}>
         <StockAdjustmentListing orgId={user.orgId} title="Stock Adjustments" />
       </Suspense>

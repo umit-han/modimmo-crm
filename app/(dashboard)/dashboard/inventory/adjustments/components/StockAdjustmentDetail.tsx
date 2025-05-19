@@ -154,21 +154,21 @@ export default function StockAdjustmentDetail({
   }
 
   return (
-    <div className="container mx-auto py-6 space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="sm:container mx-auto py-6 space-y-6">
+      <div className="flex flex-col xl:flex-row items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/dashboard/inventory/adjustments">
             <Button variant="ghost" size="icon" className="rounded-full">
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-lg lg:text-2xl font-bold">
             Adjustment {adjustment.adjustmentNumber}
           </h1>
           <div className="ml-2">{getStatusBadge(adjustment.status)}</div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap justify-center items-center gap-2">
           {adjustment.status === "DRAFT" && (
             <>
               <Button
@@ -314,7 +314,7 @@ export default function StockAdjustmentDetail({
                 <p className="text-sm font-medium text-muted-foreground">
                   Quantity Changes
                 </p>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center flex-wrap gap-4">
                   <div className="bg-green-100 p-2 rounded-md">
                     <p className="text-sm text-green-800">Increased</p>
                     <p className="text-xl font-bold text-green-800">

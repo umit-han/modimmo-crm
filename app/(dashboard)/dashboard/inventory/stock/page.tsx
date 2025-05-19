@@ -23,9 +23,9 @@ export default async function InventoryPage({
   const selectedItemId = (await searchParams).itemId || "";
 
   return (
-    <div className="container mx-auto py-6 space-y-6">
+    <div className="sm:container mx-auto py-6 space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Inventory Management</h1>
+        <h1 className="text-2xl md:text-3xl font-bold">Inventory Management</h1>
         <p className="text-muted-foreground">
           View and manage your inventory across all locations
         </p>

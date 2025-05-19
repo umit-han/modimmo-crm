@@ -223,7 +223,7 @@ export default function SalesOrderDetailView({
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-3">
-              <h2 className="text-2xl font-bold">{salesOrder.orderNumber}</h2>
+              <h2 className="text-lg md:text-2xl font-bold">{salesOrder.orderNumber}</h2>
               <div className="flex items-center gap-2">
                 {getStatusBadge(salesOrder.status)}
                 {getPaymentStatusBadge(salesOrder.paymentStatus)}

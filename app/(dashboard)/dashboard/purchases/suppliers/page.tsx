@@ -11,7 +11,7 @@ export default async function ProductsPage() {
 
   const orgId = user.orgId;
   return (
-    <div className="container py-8">
+    <div className="sm:container py-8">
       <Suspense fallback={<TableLoading title="Vehicle Inventory" />}>
         <SupplierListing title="Suppliers " />
       </Suspense>

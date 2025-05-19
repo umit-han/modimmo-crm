@@ -111,11 +111,11 @@ export function ApiKeyManagement({ orgKeys }: { orgKeys: ApiKey[] }) {
     <div className="space-y-6 max-w-5xl mx-auto">
       <Card className="border-border pb-4">
         <CardHeader className="bg-muted/50 border-b">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-center justify-between">
+            <div className="flex items-center gap-2 mb-3 sm:mb-0">
               <Shield className="h-5 w-5 text-primary" />
               <div>
-                <CardTitle className="text-xl">API Keys</CardTitle>
+                <CardTitle className="text-lg sm:text-xl">API Keys</CardTitle>
                 <CardDescription>
                   Manage your API keys for authentication
                 </CardDescription>

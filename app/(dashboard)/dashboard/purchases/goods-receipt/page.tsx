@@ -14,9 +14,9 @@ export default async function GoodsReceiptsPage() {
   }
 
   return (
-    <div className="container mx-auto py-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Goods Receipts</h1>
+    <div className="sm:container mx-auto py-6 space-y-6">
+      <div className="flex flex-col md:flex-row justify-center sm:justify-between items-center">
+        <h1 className="text-lg md:text-3xl font-bold mb-2 sm:mb-0">Goods Receipts</h1>
         <Link href="/dashboard/purchases/purchase-orders">
           <Button>View Purchase Orders</Button>
         </Link>

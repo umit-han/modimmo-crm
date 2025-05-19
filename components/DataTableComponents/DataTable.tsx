@@ -81,7 +81,7 @@ export default function DataTable<TData, TValue>({
   // console.log(searchResults);
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center gap-8">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-8">
         <div className="flex-1 w-full">
           <SearchBar
             data={data}
@@ -89,7 +89,7 @@ export default function DataTable<TData, TValue>({
             setIsSearch={setIsSearch}
           />
         </div>
-        <div className="flex items-center gap-2 ">
+        <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
           <DateRangeFilter
             data={data}
             onFilter={setFilteredData}

@@ -93,8 +93,8 @@ export default function CustomerOrderHistory({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">Order History</h2>
+      <div className="flex flex-col sm:flex-row items-center justify-between">
+        <h2 className="text-xl font-semibold mb-2 sm:mb-0">Order History</h2>
         <div className="flex items-center gap-2">
           <div className="relative">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

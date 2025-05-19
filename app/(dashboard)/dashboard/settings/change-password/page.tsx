@@ -6,7 +6,7 @@ export default async function ChangePass() {
   const user = await getAuthenticatedUser();
   const userDetails = await getUserById(user?.id ?? "");
   return (
-    <div className="p-8">
+    <div className="p-2 sm:p-8">
       <ChangePasswordForm initialData={userDetails} editingId={user?.id} />
     </div>
   );

@@ -117,14 +117,14 @@ export default async function CustomerDetailsPage({
   return (
     <div className="container mx-auto py-6 space-y-8">
       {/* Header with back button */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col md:flex-row items-center justify-between">
+        <div className="flex items-center gap-2 mb-2 md:mb-0">
           <Link href="/dashboard/sales/customers">
             <Button variant="ghost" size="icon" className="rounded-full">
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold">Customer Details</h1>
+          <h1 className="text-lg md:text-2xl font-bold">Customer Details</h1>
         </div>
 
         <div className="flex items-center gap-2">
@@ -142,8 +142,8 @@ export default async function CustomerDetailsPage({
       </div>
 
       {/* Customer overview */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="md:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <Card className="lg:col-span-2">
           <CardHeader className="flex flex-row items-center gap-4">
             <Avatar className="h-16 w-16">
               <AvatarFallback className="text-lg bg-primary/10 text-primary">

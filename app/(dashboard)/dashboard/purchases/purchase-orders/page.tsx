@@ -6,8 +6,8 @@ export default async function PurchaseOrdersPage() {
   const purchaseOrders = (await getPurchaseOrders()) || [];
   return (
     <div className=" py-4 md:py-6">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold ">Purchase Orders</h1>
+      <div className="mb-6 flex flex-wrap items-center justify-center md:justify-between">
+        <h1 className="text-lg md:text-2xl font-bold ">Purchase Orders</h1>
         {purchaseOrders.length > 0 && (
           <Link
             href="/dashboard/purchases/purchase-orders/new"

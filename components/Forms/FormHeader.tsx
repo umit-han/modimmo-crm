@@ -29,8 +29,8 @@ export default function FormHeader({
     router.back();
   }
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
+    <div className="flex flex-col sm:flex-row items-center justify-between">
+      <div className="flex items-center gap-4 mb-3 sm:mb-0">
         <Button
           onClick={goBack}
           variant="outline"

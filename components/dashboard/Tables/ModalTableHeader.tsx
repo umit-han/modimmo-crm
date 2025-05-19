@@ -160,11 +160,11 @@ export default function ModalTableHeader({
   }
   return (
     <div className=" mb-1">
-      <div className="flex justify-between items-center border-b border-gray-200 dark:border-gray-600 py-3">
-        <h2 className="scroll-m-20  text-2xl font-semibold tracking-tight first:mt-0">
+      <div className="flex justify-center sm:justify-between items-center flex-col sm:flex-row border-b border-gray-200 dark:border-gray-600 py-3">
+        <h2 className="scroll-m-20 text-lg md:text-2xl font-semibold tracking-tight mb-3 sm:mb-0 first:mt-0">
           {title}({data.length})
         </h2>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="sm:ml-auto flex items-center gap-2">
           <Button
             onClick={handleExportData}
             size="sm"

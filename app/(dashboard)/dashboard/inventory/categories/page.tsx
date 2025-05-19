@@ -14,7 +14,7 @@ export default async function page() {
   const orgId = user.orgId;
   const categories = (await getOrgCategories(orgId)) || [];
   return (
-    <div className="p-8">
+    <div className="p-p-4 md:p-8">
       <ModalTableHeader
         title="Categories"
         linkTitle="Add Category"

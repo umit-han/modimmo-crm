@@ -314,11 +314,11 @@ export function SalesOrderFilters() {
 
   return (
     <div className="mb-6 space-y-4">
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap justify-center sm:justify-start items-center gap-2">
         {/* Date Range Filter */}
         <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="justify-start">
+            <Button variant="outline" className="justify-start w-full sm:w-auto">
               <CalendarIcon className="mr-2 h-4 w-4" />
               <span>{formatDateDisplay()}</span>
             </Button>
@@ -362,7 +362,7 @@ export function SalesOrderFilters() {
 
         {/* Order Status Filter */}
         <Select value={currentStatus} onValueChange={handleStatusChange}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full sm:w-[180px]">
             <SelectValue placeholder="Select status" />
           </SelectTrigger>
           <SelectContent>
@@ -391,7 +391,7 @@ export function SalesOrderFilters() {
           value={currentPaymentStatus}
           onValueChange={handlePaymentStatusChange}
         >
-          <SelectTrigger className="w-[220px]">
+          <SelectTrigger className="w-full sm:w-[220px]">
             <SelectValue placeholder="Select payment status" />
           </SelectTrigger>
           <SelectContent>

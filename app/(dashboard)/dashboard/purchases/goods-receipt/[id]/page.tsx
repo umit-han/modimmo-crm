@@ -38,15 +38,15 @@ export default async function GoodsReceiptPage({
 
   return (
     <div className="container mx-auto py-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-bold">{goodsReceipt.receiptNumber}</h1>
+      <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="text-center md:text-left mb-2 md:mb-0">
+          <h1 className="text-lg md:text-2xl font-bold">{goodsReceipt.receiptNumber}</h1>
           <p className="text-muted-foreground">
             {goodsReceipt.purchaseOrder.supplier.name} •{" "}
             {new Date(goodsReceipt.date).toLocaleDateString()}
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <Button variant="outline">
             <Mail className="mr-2 h-4 w-4" />
             Send Email
@@ -83,7 +83,7 @@ export default async function GoodsReceiptPage({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="border rounded-lg p-4 space-y-2">
           <h3 className="font-medium">Receipt Details</h3>
           <div className="grid grid-cols-2 gap-1 text-sm">

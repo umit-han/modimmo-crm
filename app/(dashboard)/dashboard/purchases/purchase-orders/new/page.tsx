@@ -13,8 +13,8 @@ export default async function NewPurchaseOrderPage() {
   const locations = await getLocations();
   const poNumber = await getPurchaseOrderNumber();
   return (
-    <div className="container py-4 md:py-6">
-      <h1 className="text-2xl font-bold mb-6">Create Purchase Order</h1>
+    <div className="sm:container py-4 md:py-6">
+      <h1 className="text-lg md:text-2xl font-bold mb-6">Create Purchase Order</h1>
 
       <PurchaseOrderForm
         suppliers={suppliers}
