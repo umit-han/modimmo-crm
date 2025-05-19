@@ -10,7 +10,7 @@ export default async function ProductsPage() {
   const user = await getAuthenticatedUser();
   // const orgId = user.orgId;
   return (
-    <div className="container py-8">
+    <div className="sm:container py-8">
       <Suspense fallback={<TableLoading title="Locations" />}>
         <LocationListing title="Org Locations" />
       </Suspense>
