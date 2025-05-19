@@ -32,7 +32,7 @@ export default async function page() {
     };
   });
   return (
-    <div className="p-8">
+    <div className="p-2 sm:p-8">
       <Tabs defaultValue="users" className="space-y-8">
         <TabsList className="inline-flex h-auto w-full justify-start gap-4 rounded-none border-b bg-transparent p-0 flex-wrap">
           {["users", "invites"].map((feature) => {

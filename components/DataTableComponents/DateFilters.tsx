@@ -54,7 +54,7 @@ export default function DateFilters({
     // onFilter(filteredData);
   };
   return (
-    <div>
+    <div className="w-full sm:w-auto mt-2 sm:mt-0">
       <Select
         value={selectedFilter}
         onChange={handleChange}
